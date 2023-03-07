@@ -8,10 +8,7 @@ import com.yumcamp.service.EmployeeService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -46,6 +43,14 @@ public class EmployeesController {
 
         // if login, save employee info in session
         request.getSession().setAttribute("employee", emp.getEmployeeId());
+
+        return R.success(emp);
+    }
+
+
+    @GetMapping("/{employeeId}")
+    public R<Employee> getById(@PathVariable Long employeeId){
+        Employee emp = employeesService.getById(employeeId);
 
         return R.success(emp);
     }

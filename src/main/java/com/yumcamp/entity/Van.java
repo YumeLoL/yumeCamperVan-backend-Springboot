@@ -1,7 +1,9 @@
 package com.yumcamp.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.yumcamp.enums.VanStatus;
 import lombok.Data;
 
@@ -15,11 +17,12 @@ public class Van implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    private Integer vanId;
+    @TableId(type = IdType.AUTO)
+    private Long vanId;
     private String vanName;
     private Integer vanTypeId;
     private String vanLocation;
-    private int berths;
+    private Integer berths;
     private String vanDescription;
     private String vanImageUrl;
     private VanStatus vanStatus;

@@ -7,5 +7,5 @@ import com.yumcamp.service.VanService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CarServiceImpl extends ServiceImpl<VanMapper, Van> implements VanService {
+public class VanServiceImpl extends ServiceImpl<VanMapper, Van> implements VanService {
 }
