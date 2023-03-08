@@ -5,4 +5,5 @@ import com.yumcamp.entity.Van;
 
 
 public interface VanService extends IService<Van> {
+
 }

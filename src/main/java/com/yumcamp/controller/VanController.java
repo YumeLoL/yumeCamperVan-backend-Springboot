@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yumcamp.common.R;
-import com.yumcamp.entity.Employee;
 import com.yumcamp.entity.Van;
 import com.yumcamp.enums.VanStatus;
 import com.yumcamp.service.VanService;
@@ -23,13 +22,14 @@ public class VanController {
     private VanService vanService;
 
 
+
     /**
-     * get van list & condition query by location and or berths
+     * get van list & condition query by location and/or berths
      * @param page
      * @param pageSize
      * @param vanLocation
      * @param berths
-     * @return
+     * @return Van entity, VanType
      */
     @GetMapping("/page")
     public R<Page<Van>> page(int page, int pageSize, String vanLocation, Integer berths){
@@ -43,6 +43,7 @@ public class VanController {
         queryWrapper.orderByDesc(Van::getCreatedAt);
 
         vanService.page(pageInfo,queryWrapper);
+
         return R.success(pageInfo);
     }
 
