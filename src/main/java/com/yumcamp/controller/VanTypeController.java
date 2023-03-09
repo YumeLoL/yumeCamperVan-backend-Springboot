@@ -11,12 +11,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/vanType")
 public class VanTypeController {
     @Autowired
     private VanTypeService vanTypeService;
+
+    @GetMapping
+    public R<List<VanType>> getAllType(){
+        List<VanType> list = vanTypeService.list();
+        return R.success(list);
+    }
 
     @GetMapping("/{vanTypeId}")
     public R<VanType> getVanType(@PathVariable Long vanTypeId){
