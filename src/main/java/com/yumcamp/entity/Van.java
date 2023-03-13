@@ -24,7 +24,7 @@ public class Van implements Serializable {
     private String vanLocation;
     private Integer berths;
     private String vanDescription;
-    private String vanImageUrl;
+    //private String vanImageUrl;
     private VanStatus vanStatus;
     private BigDecimal vanPricePerDay;
     private Integer employeeId;
@@ -32,4 +32,10 @@ public class Van implements Serializable {
     private LocalDateTime createdAt;
     @TableField(fill = FieldFill.INSERT_UPDATE) //insert & update autofill
     private LocalDateTime updatedAt;
+
+    @TableField(fill = FieldFill.INSERT)
+    private Long createUser;
+
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Long updateUser;
 }

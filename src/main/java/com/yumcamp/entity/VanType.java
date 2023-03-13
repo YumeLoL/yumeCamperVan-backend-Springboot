@@ -25,4 +25,10 @@ public class VanType implements Serializable {
 
     @TableField(fill = FieldFill.INSERT_UPDATE) //insert & update autofill
     private LocalDateTime updatedAt;
+
+    @TableField(fill = FieldFill.INSERT)
+    private Long createUser;
+
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Long updateUser;
 }

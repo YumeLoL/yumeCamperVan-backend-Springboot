@@ -1,33 +1,16 @@
 package com.yumcamp.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.yumcamp.enums.EmployeeRole;
 import lombok.Data;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
-/**
- * Employee
- */
 @Data
-public class Employee implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
-
-    @TableId(type = IdType.AUTO)
-    private Long employeeId;
-
-    private String employeeName;
-
-    private String employeePassword;
-
-
-    private EmployeeRole employeeRole; //  ('admin', 'staff') default 'staff'
+public class VanImg {
+    private Long vanId;
+    private Long imgId;
+    private String imgUrl;
 
     @TableField(fill = FieldFill.INSERT) //insert autofill
     private LocalDateTime createdAt;
