@@ -20,7 +20,7 @@ public class Van implements Serializable {
     @TableId(type = IdType.AUTO)
     private Long vanId;
     private String vanName;
-    private Integer vanTypeId;
+    private Long vanTypeId;
     private String vanLocation;
     private Integer berths;
     private String vanDescription;

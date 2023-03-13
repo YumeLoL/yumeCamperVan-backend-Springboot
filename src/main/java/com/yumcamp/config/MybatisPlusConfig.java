@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * page searching class provided by Mybatis Plus
+ * pagination class provided by Mybatis Plus
  */
 @Configuration
 public class MybatisPlusConfig {
