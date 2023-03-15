@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/employee")
@@ -51,7 +53,12 @@ public class EmployeesController {
     @GetMapping("/{employeeId}")
     public R<Employee> getById(@PathVariable Long employeeId){
         Employee emp = employeesService.getById(employeeId);
-
         return R.success(emp);
+    }
+
+    @GetMapping
+    public R<List<Employee>> getAll(){
+        List<Employee> list = employeesService.list();
+        return R.success(list);
     }
 }

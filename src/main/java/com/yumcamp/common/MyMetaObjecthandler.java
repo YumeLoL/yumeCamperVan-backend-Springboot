@@ -23,8 +23,8 @@ public class MyMetaObjecthandler implements MetaObjectHandler {
         log.info("Auto-fill specified fields [insert]...");
         //log.info(metaObject.toString());
 
-        metaObject.setValue("createTime", LocalDateTime.now());
-        metaObject.setValue("updateTime", LocalDateTime.now());
+        metaObject.setValue("createdAt", LocalDateTime.now());
+        metaObject.setValue("updatedAt", LocalDateTime.now());
 
         // use method BaseContext to get current logined employee's id
         metaObject.setValue("createUser",BaseContext.getCurrentId());
@@ -43,7 +43,7 @@ public class MyMetaObjecthandler implements MetaObjectHandler {
         long id = Thread.currentThread().getId();
         //log.info("thread id：{}",id);
 
-        metaObject.setValue("updateTime",LocalDateTime.now());
+        metaObject.setValue("updatedAt",LocalDateTime.now());
         metaObject.setValue("updateUser",BaseContext.getCurrentId());
 
     }

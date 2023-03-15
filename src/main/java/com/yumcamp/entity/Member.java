@@ -4,35 +4,30 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.yumcamp.enums.EmployeeRole;
 import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-/**
- * Employee
- */
 @Data
-public class Employee implements Serializable {
+public class Member implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    @TableId(type = IdType.AUTO)
-    private Long employeeId;
-    private String employeeName;
-    private String employeePassword;
-    private EmployeeRole employeeRole; //  ('admin', 'staff') default 'staff'
 
+    @TableId(type = IdType.AUTO)
+    private Long memberId;
+    private String memberName;
+    private String memberEmail;
+    private String memberPassword;
+    private String address;
+    private String driverLicence;
     @TableField(fill = FieldFill.INSERT) //insert autofill
     private LocalDateTime createdAt;
-
     @TableField(fill = FieldFill.INSERT_UPDATE) //insert & update autofill
     private LocalDateTime updatedAt;
-
     @TableField(fill = FieldFill.INSERT)
     private Long createUser;
-
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
 }
