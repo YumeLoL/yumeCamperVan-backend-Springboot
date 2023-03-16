@@ -17,7 +17,8 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     public void addCorsMappings(CorsRegistry registry){
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000","https://campervan-rental-production.up.railway.app")
-                .allowedMethods("*");
+                .allowedMethods("*")
+                .allowCredentials(true);
     }
     @Override
     protected void extendMessageConverters(List<HttpMessageConverter<?>> converters) {

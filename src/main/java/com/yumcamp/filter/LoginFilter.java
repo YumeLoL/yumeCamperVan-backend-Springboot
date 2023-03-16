@@ -4,12 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.yumcamp.common.BaseContext;
 import com.yumcamp.common.R;
 import com.yumcamp.entity.Member;
+import com.yumcamp.service.MemberService;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.AntPathMatcher;
 
 import java.io.IOException;
@@ -19,6 +21,9 @@ import java.io.IOException;
 public class LoginFilter implements Filter {
     // Path matching unit
     public static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
+
+    @Autowired
+    private MemberService memberService;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {}
@@ -38,6 +43,7 @@ public class LoginFilter implements Filter {
         // check if the current URL requires authentication
         boolean requiresAuthentication = requiresAuthentication(requestURI, secureUrls);
 
+        // if the URL requires authentication
         if (requiresAuthentication) {
             // check if the user is authenticated
             Member authenticatedMember = getAuthenticatedMember(request);
@@ -86,9 +92,10 @@ public class LoginFilter implements Filter {
     private Member getAuthenticatedMember(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            Object userObj = session.getAttribute("member");
-            if (userObj instanceof Member) {
-                return (Member) userObj;
+            Long userId = (Long) session.getAttribute("member"); // member id
+
+            if (userId != null) {
+                return memberService.getById(userId);
             }
         }
         return null;

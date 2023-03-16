@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.yumcamp.common.R;
 import com.yumcamp.entity.Member;
 import com.yumcamp.service.MemberService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -28,12 +33,12 @@ public class AuthController {
      * @return
      */
     @PostMapping("/login")
-    public R<Member> login(@RequestBody Member member, HttpServletRequest request){
+    public R<Member> login(@RequestBody Member member, HttpServletRequest request,HttpServletResponse response,
+                           HttpSession session){
         // hash user password by md5
         String password = DigestUtils.md5DigestAsHex(member.getMemberPassword().getBytes());
-        //String password = member.getMemberPassword();
+
         // search the username in database
-        // sql: SELECT * FROM Employee WHERE username = '?'
         LambdaQueryWrapper<Member> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Member::getMemberEmail, member.getMemberEmail());
         Member mem = memberService.getOne(queryWrapper);
@@ -42,14 +47,22 @@ public class AuthController {
         if(mem == null){
             return R.error("The email account does not exist!");
         }
-
         // check password
         if(!mem.getMemberPassword().equals(password)){
             return R.error("Wrong password");
         }
 
-        // if login, save employee info in session
-        request.getSession().setAttribute("member", mem);
+        // after verify credentials, save employee info in session
+        request.getSession().setAttribute("member", mem.getMemberId());
+
+        // Set a cookie to store the user's login credentials
+        //String cookieId = UUID.randomUUID().toString();
+        //Cookie cookie = new Cookie("cookie_id", cookieId);
+        //cookie.setMaxAge(60 * 1 * 1); // Set cookie expiration to 1 day
+        //cookie.setHttpOnly(true); // Set the HttpOnly flag to prevent client-side access
+        //response.addCookie(cookie);
+
+        //log.info("cookie is {}", cookie.getValue());
 
         return R.success(mem);
     }
