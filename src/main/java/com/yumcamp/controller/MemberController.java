@@ -2,7 +2,9 @@ package com.yumcamp.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.yumcamp.common.R;
+import com.yumcamp.entity.Booking;
 import com.yumcamp.entity.Member;
+import com.yumcamp.service.BookingService;
 import com.yumcamp.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +22,12 @@ public class MemberController {
     private MemberService memberService;
 
 
-    @GetMapping
+    @GetMapping("/all")
     public R<List<Member>> getAllMember(){
         List<Member> memberList = memberService.list();
         return R.success(memberList);
     }
+
 };
 
 

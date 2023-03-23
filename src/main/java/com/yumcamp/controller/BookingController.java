@@ -6,8 +6,10 @@ import com.yumcamp.enums.BookingStatus;
 import com.yumcamp.service.BookingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,16 +17,17 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/bookings")
+@RequestMapping("/member/bookings")
 public class BookingController {
     @Autowired
     private BookingService bookingService;
 
-    @GetMapping
+    @GetMapping("/all")
     public R<List<Booking>> getAllBookings() {
         List<Booking> bookingList = bookingService.list();
         return R.success(bookingList);
     }
+
 
     /**
      * Get booked dates by vanId
@@ -32,7 +35,7 @@ public class BookingController {
      * @param vanId
      * @return
      */
-    @GetMapping("/available-dates/{vanId}")
+    @GetMapping("/disabledDates/{vanId}")
     public R<List<LocalDate>> getBookedDatesByVanId(@PathVariable Long vanId) {
         // get all confirmed bookings by vanId
         List<Booking> bookings = bookingService.findByVanIdAndOrderStatus(vanId, BookingStatus.confirmed);

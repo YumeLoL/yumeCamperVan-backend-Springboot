@@ -5,14 +5,15 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yumcamp.common.R;
 import com.yumcamp.dto.VanDTO;
+import com.yumcamp.entity.Booking;
 import com.yumcamp.entity.Van;
 import com.yumcamp.entity.VanImg;
 import com.yumcamp.entity.VanType;
 import com.yumcamp.enums.VanStatus;
+import com.yumcamp.service.BookingService;
 import com.yumcamp.service.VanImgService;
 import com.yumcamp.service.VanService;
 import com.yumcamp.service.VanTypeService;
-import com.yumcamp.service.impl.VanImgServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/campervan")
 public class VanController {
+
     @Autowired
     private VanService vanService;
 
