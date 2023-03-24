@@ -23,8 +23,8 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
                 .allowCredentials(true)
                 .allowedMethods("*")
                 .allowedHeaders("*");
-
     }
+
     @Override
     protected void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
 
