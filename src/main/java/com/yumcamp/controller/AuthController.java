@@ -1,21 +1,21 @@
 package com.yumcamp.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.yumcamp.common.BaseContext;
 import com.yumcamp.common.R;
 import com.yumcamp.entity.Member;
 import com.yumcamp.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @Slf4j
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
 @RequestMapping
 public class AuthController {
@@ -33,7 +33,7 @@ public class AuthController {
     public R<Member> login(@RequestBody Member member, HttpServletRequest request){
         log.info("member login: {}", member);
 
-        // hash user password by md5
+        // The input member's password is hashed using MD5
         String password = DigestUtils.md5DigestAsHex(member.getMemberPassword().getBytes());
 
         // search the member email in database
@@ -41,19 +41,19 @@ public class AuthController {
         lambdaQueryWrapper.eq(Member::getMemberEmail, member.getMemberEmail());
         Member emp = memberService.getOne(lambdaQueryWrapper);
 
-        // if there is no such member email exists in the database
+        // If there is no member with that email, an error message is returned
         if(emp == null){
             return R.error("The member account does not exist!");
         }
 
-        // check password
+        // If there is a member with that email, their hashed password is compared to the input password
         if(!emp.getMemberPassword().equals(password)){
             return R.error("Wrong password");
         }
 
-        // if login, save member info in session
+        // If the passwords match, the member's ID is saved in the session
         request.getSession().setAttribute("member", emp.getMemberId());
-        log.info("Session ID when setting attribute: {}", request.getSession().getId());
+        log.info("....member :{} is login....",request.getSession().getAttribute("member"));
 
         return R.success(emp);
     }

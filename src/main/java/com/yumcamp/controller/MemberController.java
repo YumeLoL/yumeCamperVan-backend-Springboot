@@ -16,6 +16,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RequestMapping("/member")
 public class MemberController {
     @Autowired
@@ -23,7 +24,10 @@ public class MemberController {
 
 
     @GetMapping("/all")
-    public R<List<Member>> getAllMember(){
+    public R<List<Member>> getAllMember(HttpServletRequest request){
+        Object member = request.getSession().getAttribute("member");
+        log.info("member from get all member controller: {}", member);
+
         List<Member> memberList = memberService.list();
         return R.success(memberList);
     }

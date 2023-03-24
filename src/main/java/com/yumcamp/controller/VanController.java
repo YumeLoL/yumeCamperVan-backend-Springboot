@@ -14,6 +14,7 @@ import com.yumcamp.service.BookingService;
 import com.yumcamp.service.VanImgService;
 import com.yumcamp.service.VanService;
 import com.yumcamp.service.VanTypeService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,10 @@ public class VanController {
      * @return Van entity, VanType
      */
     @GetMapping("/page")
-    public R<Page<VanDTO>> page(int page, int pageSize, String vanLocation, Integer berths, Long vanTypeId){
+    public R<Page<VanDTO>> page(int page, int pageSize, String vanLocation, Integer berths, Long vanTypeId,
+                                HttpServletRequest request){
+        log.info("member id is {}", request.getSession().getAttribute("member"));
+
         Page<Van> vanInfo=new Page<>(page,pageSize);
         Page<VanDTO> dtoPage = new Page<>(page,pageSize);
 

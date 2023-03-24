@@ -7,9 +7,11 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.AntPathMatcher;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.io.IOException;
 
@@ -18,6 +20,7 @@ import java.io.IOException;
  * Check if the user has already login
  */
 @Slf4j
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @WebFilter(filterName = "loginCheckFilter",urlPatterns = "/*")
 public class LoginCheckFilter implements Filter {
 
@@ -26,7 +29,6 @@ public class LoginCheckFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
@@ -46,9 +48,6 @@ public class LoginCheckFilter implements Filter {
         // define a check method, compare requestURI and urls
         boolean check = check(urls, requestURI);
 
-        log.info("check url and requestUri {} and {}, is {}", urls, requestURI, check);
-        log.info("Session ID when getting attribute: {}", request.getSession().getId());
-
         // if check is true, go pass
         if(check){
             log.info("......The request URL: {} can go pass......",requestURI);
@@ -56,15 +55,17 @@ public class LoginCheckFilter implements Filter {
             return;
         }
 
-
         // if check is false
         // have to check if the user has already login
-        if(request.getSession().getAttribute("member") != null){
-            log.info("......The user has already login，the id is：{} ......",request.getSession().getAttribute(
+        log.info("....check the member id in session, member id is {}:",request.getSession().getAttribute("member"));
+        HttpSession session = request.getSession();
+
+        if(session.getAttribute("member") != null){
+            log.info("......The user has already login，the id is：{}",session.getAttribute(
                     "member"));
 
             // get current logined member's id from session
-            Long currentLoginEmpId = (Long) request.getSession().getAttribute("member");
+            Long currentLoginEmpId = (Long) session.getAttribute("member");
             BaseContext.setCurrentId(currentLoginEmpId);
 
             filterChain.doFilter(request,response);
@@ -74,6 +75,7 @@ public class LoginCheckFilter implements Filter {
 
         // If not logged in, returns the data to the front-end
         log.info("......The member does not login......");
+        // The user is not logged in, redirect to the login page
         response.getWriter().write(JSON.toJSONString(R.error("NOTLOGIN")));
 
     }
