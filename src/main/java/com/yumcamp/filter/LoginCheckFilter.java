@@ -45,6 +45,7 @@ public class LoginCheckFilter implements Filter {
                 "/signup",
                 "/campervan/**",
                 "/vanType/**",
+                "/member/bookings/disabledDates/**"
         };
 
         // define a check method, compare requestURI and urls
