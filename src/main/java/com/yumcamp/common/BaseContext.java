@@ -4,13 +4,13 @@ package com.yumcamp.common;
  *  encapsulate a utility class based on ThreadLocal，record current logged-in member's id
  */
 public class BaseContext {
-    private static final ThreadLocal<Long> threadLocal = new ThreadLocal<>(); //Long id
+    private static final ThreadLocal<String> threadLocal = new ThreadLocal<>(); //String id
 
     /**
      * set id
      * @param id
      */
-    public static void setCurrentId(Long id){
+    public static void setCurrentId(String id){
         threadLocal.set(id);
     }
 
@@ -18,7 +18,7 @@ public class BaseContext {
      * get id
      * @return
      */
-    public static Long getCurrentId(){
+    public static String getCurrentId(){
         return threadLocal.get();
     }
 }

@@ -27,7 +27,7 @@ public class VanTypeController {
     }
 
     @GetMapping("/{vanTypeId}")
-    public R<VanType> getVanType(@PathVariable Long vanTypeId){
+    public R<VanType> getVanType(@PathVariable String vanTypeId){
         VanType vanType = vanTypeService.getById(vanTypeId);
         return R.success(vanType);
     }

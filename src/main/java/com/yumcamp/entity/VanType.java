@@ -15,8 +15,8 @@ public class VanType implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @TableId(type = IdType.AUTO)
-    private Long vanTypeId;
+    @TableId(type = IdType.ASSIGN_UUID)
+    private String vanTypeId;
 
     private String vanTypeName;
 
@@ -27,8 +27,8 @@ public class VanType implements Serializable {
     private LocalDateTime updatedAt;
 
     @TableField(fill = FieldFill.INSERT)
-    private Long createUser;
+    private String createUser;
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Long updateUser;
+    private String updateUser;
 }

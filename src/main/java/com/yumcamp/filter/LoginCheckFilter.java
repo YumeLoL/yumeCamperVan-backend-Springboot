@@ -68,7 +68,7 @@ public class LoginCheckFilter implements Filter {
                     "member"));
 
             // get current logined member's id from session
-            Long currentLoginEmpId = (Long) session.getAttribute("member");
+            String currentLoginEmpId = (String) session.getAttribute("member");
             BaseContext.setCurrentId(currentLoginEmpId);
 
             filterChain.doFilter(request,response);

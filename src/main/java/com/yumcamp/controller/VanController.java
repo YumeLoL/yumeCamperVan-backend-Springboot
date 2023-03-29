@@ -75,7 +75,7 @@ public class VanController {
 
             BeanUtils.copyProperties(item,vanDTO);
 
-            Long vanId = item.getVanId();
+            String vanId = item.getVanId();
             generateVanDTO(vanId, item, vanDTO);
             return vanDTO;
         }).collect(Collectors.toList());
@@ -90,7 +90,7 @@ public class VanController {
      * @return
      */
     @GetMapping("/{vanId}")
-    public R<VanDTO> getVanById(@PathVariable Long vanId){
+    public R<VanDTO> getVanById(@PathVariable String vanId){
         Van van = vanService.getById(vanId);
         VanDTO vanDTO = new VanDTO();
 
@@ -103,7 +103,7 @@ public class VanController {
 
 
 
-    private void generateVanDTO(@PathVariable Long vanId, Van van, VanDTO vanDTO) {
+    private void generateVanDTO(@PathVariable String vanId, Van van, VanDTO vanDTO) {
         LambdaQueryWrapper<VanImg> imgWrapper=new LambdaQueryWrapper<>();
         imgWrapper.eq(VanImg::getVanId, vanId).select(VanImg::getImgUrl); // only select the img url
         List<String> imgUrls = vanImgService.list(imgWrapper)
@@ -112,7 +112,7 @@ public class VanController {
                 .collect(Collectors.toList()); // extract the img urls
         vanDTO.setVanImg(imgUrls);
 
-        Long typeId = van.getVanTypeId();
+        String typeId = van.getVanTypeId();
         VanType vanType = vanTypeService.getById(typeId);
         if(vanType!=null){
             String typeName = vanType.getVanTypeName();

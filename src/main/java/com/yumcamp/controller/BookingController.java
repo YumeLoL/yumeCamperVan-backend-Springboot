@@ -6,10 +6,7 @@ import com.yumcamp.enums.BookingStatus;
 import com.yumcamp.service.BookingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,10 +19,20 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
+    /**
+     * get all booking requests
+     * @return
+     */
     @GetMapping("/all")
     public R<List<Booking>> getAllBookings() {
         List<Booking> bookingList = bookingService.list();
         return R.success(bookingList);
+    }
+
+    @PostMapping
+    public R<String> saveNew(@RequestBody Booking booking){
+        bookingService.save(booking);
+        return R.success("Make a new booking request successfully");
     }
 
 

@@ -16,10 +16,10 @@ import java.time.LocalDateTime;
 public class Booking {
     @Serial
     private static final long serialVersionUID = 1L;
-    @TableId(type = IdType.AUTO)
-    private Long bookingId;
-    private Long vanId;
-    private Long memberId;
+    @TableId(type = IdType.ASSIGN_UUID)
+    private String bookingId;
+    private String vanId;
+    private String memberId;
     private LocalDate startDate;
     private LocalDate endDate;
     private BigDecimal price;
@@ -29,7 +29,7 @@ public class Booking {
     @TableField(fill = FieldFill.INSERT_UPDATE) //insert & update autofill
     private LocalDateTime updatedAt;
     @TableField(fill = FieldFill.INSERT)
-    private Long createUser;
+    private String createUser;
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Long updateUser;
+    private String updateUser;
 }

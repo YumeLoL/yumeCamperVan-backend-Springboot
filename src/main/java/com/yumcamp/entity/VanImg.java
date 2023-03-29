@@ -1,15 +1,18 @@
 package com.yumcamp.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
 public class VanImg {
-    private Long vanId;
-    private Long imgId;
+    @TableId(type = IdType.ASSIGN_UUID)
+    private String imgId;
+    private String vanId;
     private String imgUrl;
 
     @TableField(fill = FieldFill.INSERT) //insert autofill
@@ -19,8 +22,8 @@ public class VanImg {
     private LocalDateTime updatedAt;
 
     @TableField(fill = FieldFill.INSERT)
-    private Long createUser;
+    private String createUser;
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Long updateUser;
+    private String updateUser;
 }
