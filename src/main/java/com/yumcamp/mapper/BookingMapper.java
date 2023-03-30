@@ -12,5 +12,5 @@ import java.util.List;
 @Mapper
 public interface BookingMapper extends BaseMapper<Booking> {
     @Select("SELECT * FROM booking WHERE van_id = #{vanId} AND booking_status = #{status}")
-    List<Booking> findByVanIdAndOrderStatus(@Param("vanId") Long vanId, @Param("status") BookingStatus status);
+    List<Booking> findByVanIdAndOrderStatus(@Param("vanId") String vanId, @Param("status") BookingStatus status);
 }

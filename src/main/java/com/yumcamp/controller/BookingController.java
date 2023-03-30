@@ -4,8 +4,12 @@ import com.yumcamp.common.R;
 import com.yumcamp.entity.Booking;
 import com.yumcamp.enums.BookingStatus;
 import com.yumcamp.service.BookingService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -14,7 +18,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/member/bookings")
+@RequestMapping(value="/member/bookings")
 public class BookingController {
     @Autowired
     private BookingService bookingService;
@@ -29,11 +33,20 @@ public class BookingController {
         return R.success(bookingList);
     }
 
-    @PostMapping
-    public R<String> saveNew(@RequestBody Booking booking){
+    /**
+     * save a new booking
+     * config 'consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE', because 'Content-Type':'application/x-www-form-urlencoded'
+     * using the @ModelAttribute annotation to save data into Booking directly
+     * @param booking
+     * @return
+     */
+    @PostMapping(value = "/request", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public R<String> saveNew(@ModelAttribute Booking booking){
+        // Access the form data using the @ModelAttribute annotation
         bookingService.save(booking);
-        return R.success("Make a new booking request successfully");
+        return R.success("make a new booking request successfully");
     }
+
 
 
     /**
@@ -43,7 +56,7 @@ public class BookingController {
      * @return
      */
     @GetMapping("/disabledDates/{vanId}")
-    public R<List<LocalDate>> getBookedDatesByVanId(@PathVariable Long vanId) {
+    public R<List<LocalDate>> getBookedDatesByVanId(@PathVariable String vanId) {
         // get all confirmed bookings by vanId
         List<Booking> bookings = bookingService.findByVanIdAndOrderStatus(vanId, BookingStatus.confirmed);
 

@@ -8,5 +8,5 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface BookingService extends IService<Booking> {
-    List<Booking> findByVanIdAndOrderStatus(Long vanId, BookingStatus status);
+    List<Booking> findByVanIdAndOrderStatus(String vanId, BookingStatus status);
 }
