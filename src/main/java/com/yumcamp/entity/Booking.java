@@ -23,6 +23,7 @@ public class Booking {
     private LocalDate startDate;
     private LocalDate endDate;
     private BigDecimal price;
+    private Integer guest;
     private BookingStatus bookingStatus; // confirmed, cancelled, completed
     @TableField(fill = FieldFill.INSERT) //insert autofill
     private LocalDateTime createdAt;

@@ -21,7 +21,6 @@ import java.io.IOException;
  * Check if the user has already login
  */
 @Slf4j
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 @WebFilter(filterName = "loginCheckFilter",urlPatterns = "/*")
 public class LoginCheckFilter implements Filter {
 

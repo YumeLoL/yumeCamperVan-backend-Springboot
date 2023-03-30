@@ -18,7 +18,7 @@ public class BookingServiceImpl extends ServiceImpl<BookingMapper, Booking> impl
     private BookingMapper bookingMapper;
 
     @Override
-    public List<Booking> findByVanIdAndOrderStatus(Long vanId, BookingStatus status) {
+    public List<Booking> findByVanIdAndOrderStatus(String vanId, BookingStatus status) {
         return bookingMapper.findByVanIdAndOrderStatus(vanId, status);
     }
 }
