@@ -24,7 +24,7 @@ public class Booking {
     private LocalDate endDate;
     private BigDecimal price;
     private Integer guest;
-    private BookingStatus bookingStatus; // confirmed, cancelled, completed
+    private BookingStatus bookingStatus; // pending, confirmed, cancelled, completed
     @TableField(fill = FieldFill.INSERT) //insert autofill
     private LocalDateTime createdAt;
     @TableField(fill = FieldFill.INSERT_UPDATE) //insert & update autofill

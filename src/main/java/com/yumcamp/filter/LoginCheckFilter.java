@@ -60,7 +60,7 @@ public class LoginCheckFilter implements Filter {
         // if check is false
         // have to check if the user has already login
         log.info("....check the member id in session, member id is {}:",request.getSession().getAttribute("member"));
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
 
         if(session.getAttribute("member") != null){
             log.info("......The user has already login，the id is：{}",session.getAttribute(
@@ -70,6 +70,8 @@ public class LoginCheckFilter implements Filter {
             String currentLoginEmpId = (String) session.getAttribute("member");
             BaseContext.setCurrentId(currentLoginEmpId);
 
+            response.setHeader("X-IsLoggedIn", String.valueOf(true));
+
             filterChain.doFilter(request,response);
             return;
         }
@@ -78,6 +80,7 @@ public class LoginCheckFilter implements Filter {
         log.info("......The member does not login......");
         // The user is not logged in, redirect to the login page
         // add configed Header, make sure R.error message sent to front-end
+        response.setHeader("X-IsLoggedIn", String.valueOf(false));
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.getWriter().write(JSON.toJSONString(R.error("NOTLOGIN")));

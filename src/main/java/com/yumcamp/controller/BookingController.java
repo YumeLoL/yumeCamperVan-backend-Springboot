@@ -1,5 +1,6 @@
 package com.yumcamp.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.yumcamp.common.R;
 import com.yumcamp.entity.Booking;
 import com.yumcamp.enums.BookingStatus;
@@ -47,6 +48,22 @@ public class BookingController {
         return R.success("make a new booking request successfully");
     }
 
+
+    /**
+     * get all bookings by memberId with bookingStatus
+     * @param memberId
+     * @param bookingStatus
+     * @return
+     */
+    @GetMapping("/{memberId}")
+    public R<List<Booking>> getBookingsByMemberId(@PathVariable String memberId, BookingStatus bookingStatus){
+        LambdaQueryWrapper<Booking> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Booking::getMemberId, memberId);
+        queryWrapper.eq(Booking::getBookingStatus, bookingStatus);
+        List<Booking> list = bookingService.list(queryWrapper);
+
+        return R.success(list);
+    }
 
 
     /**
