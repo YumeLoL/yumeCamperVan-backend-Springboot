@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### this is branch dev - ignore .yml file uploading ###
-/application.yml
+!**/application.yml
