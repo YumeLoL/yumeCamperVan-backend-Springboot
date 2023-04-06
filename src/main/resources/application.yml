@@ -1,14 +1,18 @@
 server:
   port: 8081
+#  servlet:
+#    session:
+#      timeout: 5s
+
 
 spring:
   application:
     name: yumCamp
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://root:9AcTn1wIhbuBRGGh9UCl@containers-us-west-79.railway.app:7008/railway
+    url: jdbc:mysql://localhost:3306/yumecampervandev
     username: root
-    password: 9AcTn1wIhbuBRGGh9UCl
+    password: 140629Yml.
     druid:
       initial-size: 1
       min-idle: 1
