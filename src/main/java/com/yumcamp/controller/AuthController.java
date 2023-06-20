@@ -90,5 +90,17 @@ public class AuthController {
         return R.success("Add a new member successful");
     }
 
+
+    /**
+     * some page or button may need loginCheck before redirect
+     * @param request
+     * @return
+     */
+    @GetMapping("/loginCheck")
+    public R<String> loginCheck(HttpServletRequest request){
+        if(request.getAttribute("member") != null) {
+            return R.success("Member already logged in");
+        }else {return R.error("Member not login yet, please login in first");}
+    }
 }
 
