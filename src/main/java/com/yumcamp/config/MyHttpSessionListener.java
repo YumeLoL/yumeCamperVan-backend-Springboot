@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class MyHttpSessionListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent event) {
-        event.getSession().setMaxInactiveInterval(5);
+
+        event.getSession().setMaxInactiveInterval(60);
     }
 }

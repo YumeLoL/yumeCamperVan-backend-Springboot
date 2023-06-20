@@ -53,6 +53,7 @@ public class AuthController {
 
         // If the passwords match, the member's ID is saved in the session
         request.getSession().setAttribute("member", emp.getMemberId());
+//        request.getSession().setMaxInactiveInterval(30);
         log.info("....member :{} is login....",request.getSession().getAttribute("member"));
 
         return R.success(emp);
