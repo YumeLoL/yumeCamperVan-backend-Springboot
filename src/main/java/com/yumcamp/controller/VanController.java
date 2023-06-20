@@ -5,12 +5,10 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yumcamp.common.R;
 import com.yumcamp.dto.VanDTO;
-import com.yumcamp.entity.Booking;
 import com.yumcamp.entity.Van;
 import com.yumcamp.entity.VanImg;
 import com.yumcamp.entity.VanType;
 import com.yumcamp.enums.VanStatus;
-import com.yumcamp.service.BookingService;
 import com.yumcamp.service.VanImgService;
 import com.yumcamp.service.VanService;
 import com.yumcamp.service.VanTypeService;
@@ -47,6 +45,7 @@ public class VanController {
      */
     @GetMapping("/page")
     public R<Page<VanDTO>> page(int page, int pageSize, String vanLocation, Integer berths, Long vanTypeId,
+                                String vanName,
                                 HttpServletRequest request){
         log.info("member id is {}", request.getSession().getAttribute("member"));
 
@@ -60,6 +59,7 @@ public class VanController {
         vanLambdaQueryWrapper.eq(vanTypeId != null, Van::getVanTypeId, vanTypeId);
         vanLambdaQueryWrapper.like(StringUtils.isNotEmpty(vanLocation), Van::getVanLocation, vanLocation);
         vanLambdaQueryWrapper.le(berths != null,Van::getBerths,berths);
+        vanLambdaQueryWrapper.like(StringUtils.isNotEmpty(vanName), Van::getVanName, vanName);
         vanLambdaQueryWrapper.orderByDesc(Van::getCreatedAt);
         vanService.page(vanInfo,vanLambdaQueryWrapper);
 
@@ -81,6 +81,7 @@ public class VanController {
         return R.success(dtoPage);
     }
 
+
     /**
      * get all van details by id
      * @param vanId
@@ -91,7 +92,7 @@ public class VanController {
         Van van = vanService.getById(vanId);
         VanDTO vanDTO = new VanDTO();
 
-        //copy dish to dishDto, get vanTypeName
+        //copy van to vanDto, get vanTypeName
         BeanUtils.copyProperties(van,vanDTO);
         generateVanDTO(vanId, van, vanDTO);
 

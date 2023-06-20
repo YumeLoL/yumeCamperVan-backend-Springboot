@@ -53,7 +53,6 @@ public class AuthController {
 
         // If the passwords match, the member's ID is saved in the session
         request.getSession().setAttribute("member", emp.getMemberId());
-//        request.getSession().setMaxInactiveInterval(30);
         log.info("....member :{} is login....",request.getSession().getAttribute("member"));
 
         return R.success(emp);
@@ -90,5 +89,17 @@ public class AuthController {
         return R.success("Add a new member successful");
     }
 
+
+    /**
+     * some page or button may need loginCheck before redirect
+     * @param request
+     * @return
+     */
+    @GetMapping("/loginCheck")
+    public R<String> loginCheck(HttpServletRequest request){
+        if(request.getAttribute("member") != null) {
+            return R.success("Member already logged in");
+        }else {return R.error("Member not login yet, please login in first");}
+    }
 }
 
